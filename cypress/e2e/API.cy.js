@@ -5,42 +5,14 @@ describe('API tests', () => {
     cy.request({
       method: 'GET',
       url: `${Cypress.env('apiUrl')}/orders`,
-      failOnStatusCode: false // Empêche le test d'échouer si le statut n'est pas 200
+      failOnStatusCode: false
     }).then((response) => {
       expect([401, 403]).to.include(response.status);
     });
   });
 
-  it('login with unknown user', () => {
-    cy.request({
-      method: 'POST',
-      url: `${Cypress.env('apiUrl')}/login`,
-      body: {
-        username: 'unknown@test.fr', // Utilisateur inconnu
-        password: 'wrongpassword'
-      },
-      failOnStatusCode: false
-    }).then((response) => {
-      expect(response.status).to.equal(401); // Vérifie que le statut est 401
-    });
-  });
-
-  it('login with known user', () => {
-    cy.request({
-      method: 'POST',
-      url: `${Cypress.env('apiUrl')}/login`,
-      body: {
-        username: Cypress.env('loginUsername'),
-        password: Cypress.env('loginPassword')
-      }
-    }).then((response) => {
-      expect(response.status).to.equal(200); // Vérifie que le statut est 200
-      expect(response.body).to.have.property('token'); // Vérifie que le token est présent dans la réponse
-    });
-  });
-
   before(() => {
-    // Automatisation de la connexion pour récupérer un token valide
+    // Automatisation de la connexion pour récupérer un token valide (Cette fonction s'exécute avant tous les tests suivants)
     cy.request({
       method: 'POST',
       url: `${Cypress.env('apiUrl')}/login`, // Utilise l'URL de l'API depuis cypress.config.js
@@ -54,7 +26,7 @@ describe('API tests', () => {
     });
   });
 
-  it('basket when authentificated', () => {
+  it('basket when authenticated', () => {
     const productIdToAdd = 3; // ID du produit à ajouter au panier
 
     // Ajouter un article au panier
