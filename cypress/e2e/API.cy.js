@@ -129,7 +129,6 @@ describe('API tests', () => {
         comment: "Excellent",
         rating: 5
       },      
-      failOnStatusCode: false // Empêche le test d'échouer si le statut n'est pas 200
     }).then((response) => {
       expect(response.status).to.equal(200);
       expect(response.body).to.have.property('id'); // Vérifie que l'avis a un ID
