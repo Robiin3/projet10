@@ -54,10 +54,10 @@ describe('API tests', () => {
     });
   });
 
-  it('basket when authentificated', () => {
-    const productIdToAdd = 3; // ID du produit à ajouter au panier
+  it('add product basket and get basket products list', () => {
+    const productIdToAdd = 4; // ID du produit à ajouter au panier
 
-    // Ajouter un article au panier
+    // Ajoute un article au panier
     cy.request({
       method: 'PUT',
       url: `${Cypress.env('apiUrl')}/orders/add`, // Endpoint pour ajouter un produit au panier
@@ -97,6 +97,44 @@ describe('API tests', () => {
     }).then((response) => {
       expect(response.status).to.equal(200);
       expect(response.body.id).to.equal(3); // Vérifie que l'ID du produit est bien 3
+    });
+  });
+
+  it('add out-of-stock product to basket', () => {
+    cy.request({
+      method: 'PUT',
+      url: `${Cypress.env('apiUrl')}/orders/add`,
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      },
+      body: {
+        product: 3, // Id du produit en rupture de stock
+        quantity: 1
+      },
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.equal(400); // Vérifie que le statut est 400
+    });
+  });
+
+  it('add a review', () => {
+    cy.request({
+      method: 'POST',
+      url: `${Cypress.env('apiUrl')}/reviews`,
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      },
+      body: {
+        title: "test",
+        comment: "Excellent",
+        rating: 5
+      },      
+      failOnStatusCode: false // Empêche le test d'échouer si le statut n'est pas 200
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body).to.have.property('id'); // Vérifie que l'avis a un ID
+      expect(response.body.rating).to.equal(5); // Vérifie que la note correspond
+      expect(response.body.comment).to.equal('Excellent'); // Vérifie que le texte du commentaire correspond
     });
   });
 });
