@@ -67,15 +67,15 @@ describe('Cart tests', () => {
     cy.get('[data-cy="product-link"]').eq(3).click(); // Clique sur le quatrième produit de la liste (index 3)
 
     // Entre une quantité négative
-    cy.get('[data-cy="detail-product-quantity"]').clear().type('-1');
-    cy.get('[data-cy="detail-product-quantity"]').invoke('val').then((value) => {
-      if (value !== '1') {
+    cy.get('[data-cy="detail-product-quantity"]').clear().type('-1'); // Entre une quantité négative
+    cy.get('[data-cy="detail-product-quantity"]').invoke('val').then((value) => { // Récupère la valeur de la quantité
+      if (value !== '1') { // Vérifie si la valeur est différente de 1
         throw new Error(`Erreur: La quantité n'a pas été réinitialisée à 1, valeur actuelle: ${value}`);
       }
     });
 
     // Entre une quantité supérieure à 20
-    cy.get('[data-cy="detail-product-quantity"]').clear().type('21');
+    cy.get('[data-cy="detail-product-quantity"]').clear().type('21'); // Entre une quantité supérieure à 20
     cy.get('[data-cy="detail-product-quantity"]').invoke('val').then((value) => {
       if (value !== '20') {
         throw new Error(`Erreur: La quantité n'a pas été réinitialisée à 20, valeur actuelle: ${value}`);
