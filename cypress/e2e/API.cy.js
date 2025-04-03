@@ -2,6 +2,7 @@ describe('API tests', () => {
   let authToken;
 
   it('basket without authentication', () => {
+    // Vérifie qu'un utilisateur non authentifié ne peut pas accéder au panier
     cy.request({
       method: 'GET',
       url: `${Cypress.env('apiUrl')}/orders`,
@@ -12,6 +13,7 @@ describe('API tests', () => {
   });
 
   it('login with unknown user', () => {
+    // Teste une tentative de connexion avec un utilisateur inconnu
     cy.request({
       method: 'POST',
       url: `${Cypress.env('apiUrl')}/login`,
@@ -26,6 +28,7 @@ describe('API tests', () => {
   });
 
   it('login with known user', () => {
+    // Teste une connexion avec un utilisateur valide
     cy.request({
       method: 'POST',
       url: `${Cypress.env('apiUrl')}/login`,
@@ -40,7 +43,7 @@ describe('API tests', () => {
   });
 
   before(() => {
-    // Automatisation de la connexion pour récupérer un token valide
+    // Récupère un token valide avant les tests
     cy.request({
       method: 'POST',
       url: `${Cypress.env('apiUrl')}/login`, // Utilise l'URL de l'API depuis cypress.config.js
@@ -55,6 +58,7 @@ describe('API tests', () => {
   });
 
   it('add product basket and get basket products list', () => {
+    // Ajoute un produit au panier et vérifie son contenu
     const productIdToAdd = 4; // ID du produit à ajouter au panier
 
     // Ajoute un article au panier
@@ -88,6 +92,7 @@ describe('API tests', () => {
   });
 
   it('specific product details', () => {
+    // Vérifie les détails d'un produit spécifique
     cy.request({
       method: 'GET',
       url: `${Cypress.env('apiUrl')}/products/3`,
@@ -101,6 +106,7 @@ describe('API tests', () => {
   });
 
   it('add out-of-stock product to basket', () => {
+    // Teste l'ajout d'un produit en rupture de stock
     cy.request({
       method: 'PUT',
       url: `${Cypress.env('apiUrl')}/orders/add`,
@@ -118,6 +124,7 @@ describe('API tests', () => {
   });
 
   it('add a review', () => {
+    // Ajoute un avis et vérifie sa création
     cy.request({
       method: 'POST',
       url: `${Cypress.env('apiUrl')}/reviews`,
@@ -135,5 +142,5 @@ describe('API tests', () => {
       expect(response.body.rating).to.equal(5); // Vérifie que la note correspond
       expect(response.body.comment).to.equal('Excellent'); // Vérifie que le texte du commentaire correspond
     });
-  });
+  });  
 });
