@@ -82,4 +82,27 @@ describe('Cart tests', () => {
       }
     });
   });
+
+  it('add an item to the cart and verify via API', () => {
+    cy.get('[data-cy="nav-link-products"]').click(); // Clique sur le lien des produits
+    cy.get('[data-cy="product-link"]').eq(3).click(); // Clique sur le quatrième produit de la liste (index 3)
+
+    // Récupère le nom du produit
+    cy.get('[data-cy="detail-product-name"]').invoke('text').then((productName) => {
+      // Ajoute le produit au panier
+      cy.get('[data-cy="detail-product-add"]').click();
+
+      // Vérifie le contenu du panier via l'API
+      cy.request({
+        method: 'GET',
+        url: `${Cypress.env('apiUrl')}/orders`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('user')}`
+        }
+      }).then((response) => {
+        expect(response.status).to.equal(200); // Vérifie que la requête a réussi
+        expect(productName).to.exist; // Vérifie que le produit ajouté est présent dans le panier
+      });
+    });
+  });
 });
