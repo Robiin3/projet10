@@ -62,25 +62,32 @@ describe('Cart tests', () => {
     });
   });
 
-  it('validate quantity limits in cart', () => {
+  it('cart negative limit', () => {
     cy.get('[data-cy="nav-link-products"]').click(); // Clique sur le lien des produits
     cy.get('[data-cy="product-link"]').eq(3).click(); // Clique sur le quatrième produit de la liste (index 3)
 
     // Entre une quantité négative
     cy.get('[data-cy="detail-product-quantity"]').clear().type('-1'); // Entre une quantité négative
-    cy.get('[data-cy="detail-product-quantity"]').invoke('val').then((value) => { // Récupère la valeur de la quantité
-      if (value !== '1') { // Vérifie si la valeur est différente de 1
-        throw new Error(`Erreur: La quantité n'a pas été réinitialisée à 1, valeur actuelle: ${value}`);
-      }
-    });
+    cy.get('[data-cy="detail-product-add"]').click(); // Tente d'ajouter le produit au panier
+
+    // Vérifie que le produit n'est pas ajouté au panier
+    cy.wait(500); // Attente de 500ms
+    cy.get('[data-cy="nav-link-cart"]').click(); // Accède à la page du panier
+    cy.get('[data-cy="cart-line-name"]').should('not.exist'); // Vérifie qu'aucun produit n'est présent
+  });
+
+  it('cart exceeding limit', () => {
+    cy.get('[data-cy="nav-link-products"]').click(); // Clique sur le lien des produits
+    cy.get('[data-cy="product-link"]').eq(3).click(); // Clique sur le quatrième produit de la liste (index 3)
 
     // Entre une quantité supérieure à 20
     cy.get('[data-cy="detail-product-quantity"]').clear().type('21'); // Entre une quantité supérieure à 20
-    cy.get('[data-cy="detail-product-quantity"]').invoke('val').then((value) => {
-      if (value !== '20') {
-        throw new Error(`Erreur: La quantité n'a pas été réinitialisée à 20, valeur actuelle: ${value}`);
-      }
-    });
+    cy.get('[data-cy="detail-product-add"]').click(); // Tente d'ajouter le produit au panier
+
+    // Vérifie que le produit n'est pas ajouté au panier
+    cy.wait(500); // Attente de 500ms
+    cy.get('[data-cy="nav-link-cart"]').click(); // Accède à la page du panier
+    cy.get('[data-cy="cart-line-name"]').should('not.exist'); // Vérifie qu'aucun produit n'est présent
   });
 
   it('add an item to the cart and verify via API', () => {
