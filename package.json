@@ -1,0 +1,24 @@
+{
+  "name": "testeurlogiciel_automatisez_des_tests_pour_une_boutique_en_ligne-main",
+  "version": "1.0.0",
+  "description": "Eco Bliss Bath est une start-up spécialisée dans la vente de produits de beauté écoresponsables dont le produit principal est un savon solide. La boutique prépare un site de vente en ligne, dont la première version doit être testée.",
+  "main": "cypress.config.js",
+  "devDependencies": {
+    "cypress-mochawesome-reporter": "^3.8.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robiin3/projet10.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Robiin3/projet10/issues"
+  },
+  "homepage": "https://github.com/Robiin3/projet10#readme"
+}

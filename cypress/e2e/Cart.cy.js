@@ -85,7 +85,7 @@ describe('Cart tests', () => {
     cy.get('[data-cy="detail-product-add"]').click(); // Tente d'ajouter le produit au panier
 
     // Vérifie que le produit n'est pas ajouté au panier
-    cy.wait(500); // Attente de 500ms
+    cy.wait(3500); // Attente de 3500ms
     cy.get('[data-cy="nav-link-cart"]').click(); // Accède à la page du panier
     cy.get('[data-cy="cart-line-name"]').should('not.exist'); // Vérifie qu'aucun produit n'est présent
   });
