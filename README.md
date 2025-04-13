@@ -36,6 +36,7 @@ Depuis un terminal ouvert dans le dossier du projet, saisir les commandes :
 **2. Génération de rapports**
 
 Après avoir exécuté les tests via `npx cypress run`, les rapports de tests sont disponibles dans le dossier cypress/reports. Il suffit d'ouvrir les pages HTML correspondantes (_mochawesome_XXX.html_).
+
 Des captures d'écran des tests en échec sont présentes dans le dossier cypress/screenshots.
 
 **3. Connexion au site web**
