@@ -13,6 +13,7 @@ Installer
 - Docker
 - NPM
 - Cypress
+- Mochawesome
 
 
 **1. Téléchargez ou clonez le dépôt**
@@ -29,18 +30,23 @@ Nb : à l'étape 2, ne pas ajouter le `sudo` si vous êtes sous Windows (sauf de
 
 Depuis un terminal ouvert dans le dossier du projet, saisir les commandes :
 
-- _npx cypress run_ pour exécuter tous les tests Cypress en mode non interactif
-- _npx cypress open_ pour ouvrir l'interface graphique de Cypress. Cliquer sur E2E testing, choisir le navigateur à utiliser, puis sélectionner le fichier de test à exécuter.
+- `npx cypress run` pour exécuter tous les tests Cypress en mode non interactif
+- `npx cypress open` pour ouvrir l'interface graphique de Cypress. Cliquer sur E2E testing, choisir le navigateur à utiliser, puis sélectionner le fichier de test à exécuter.
 
-**2. Connexion au site web**
+**2. Génération de rapports**
+
+Après avoir exécuté les tests via `npx cypress run`, les rapports de tests sont disponibles dans le dossier cypress/reports. Il suffit d'ouvrir les pages HTML correspondantes (_mochawesome_XXX.html_).
+Des captures d'écran des tests en échec sont présentes dans le dossier cypress/screenshots.
+
+**3. Connexion au site web**
 
 - identifiant: test2@test.fr 
 - mot de passe: testtest
 
-**3. API**
+**4. API**
 
 Swagger: http://localhost:8081/api/doc
 
-**4. Fermeture du projet**
+**5. Fermeture du projet**
 
-Saisir la commande : docker-compose down
+Saisir la commande : `docker-compose down`
